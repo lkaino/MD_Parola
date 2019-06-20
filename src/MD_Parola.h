@@ -957,6 +957,8 @@ public:
   */
   void getTextExtent(uint16_t &startColumn, uint16_t &endColumn) { startColumn = _limitLeft; endColumn = _limitRight; }
 
+  uint16_t  getTextWidth(const char *p);      // width of text in columns
+
   /** @} */
 #endif
 
@@ -1010,7 +1012,6 @@ private:
   bool            _animationAdvanced;  // true is animation advanced inthe last animation call
 
   void      setInitialConditions(void);    // set up initial conditions for an effect
-  uint16_t  getTextWidth(const char *p);   // width of text in columns
   bool      calcTextLimits(const char *p); // calculate the right and left limits for the text
 
   // Variables used in the effects routines. These can be used by the functions as needed.
@@ -1369,6 +1370,8 @@ public:
    * \return the current setting for the space between characters in columns. Assumes one zone only.
    */
   inline uint8_t getCharSpacing(void) { return _Z[0].getCharSpacing(); }
+
+  inline uint16_t getTextWidth(const char *p) { return _Z[0].getTextWidth(p); }
 
   /**
    * Get the inter-character spacing in columns for a specific zone.
@@ -1968,10 +1971,10 @@ public:
 
   /** @} */
 
+  MD_PZone    _Z[MAX_ZONES];  ///< Fixed number of zones
   private:
   // The display hardware controlled by this library
   MD_MAX72XX  _D;         ///< Hardware library object
-  MD_PZone    _Z[MAX_ZONES];  ///< Fixed number of zones
   uint8_t     _numModules;///< Number of display modules [0..numModules-1]
   uint8_t     _numZones;  ///< Max number of zones in the display [0..numZones-1]
 };
